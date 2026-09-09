@@ -4,7 +4,7 @@ import { Suspense } from "react";
 import { Prisma } from "@prisma/client";
 import prisma from "@/lib/db";
 import { getSession } from "@/lib/session";
-import { InvoiceData } from "@/lib/invoice-types";
+import { InvoiceData, computeExVAT } from "@/lib/invoice-types";
 import PageHeader from "@/components/ui/PageHeader";
 import StatusBadge from "@/components/ui/StatusBadge";
 import InvoiceRowActions from "./InvoiceRowActions";
@@ -27,19 +27,12 @@ function formatCurrency(amount: number) {
 function calcTotalFromData(raw: unknown): number {
   const data = raw as Partial<InvoiceData> | null;
   if (!data) return 0;
-  const mainEx = (data.lineItems ?? []).reduce(
-    (s, i) => s + (i.amount !== undefined ? i.amount : i.quantity * i.unitPrice),
-    0
-  );
-  const extraEx = (data.extraSheets ?? []).reduce(
-    (s, sheet) =>
-      s + sheet.lineItems.reduce(
-        (ss, i) => ss + (i.amount !== undefined ? i.amount : i.quantity * i.unitPrice),
-        0
-      ),
-    0
-  );
-  return (mainEx + extraEx) * 1.18;
+  return computeExVAT({
+    lineItems: data.lineItems ?? [],
+    extraSheets: data.extraSheets ?? [],
+    commonPricing: data.commonPricing,
+    commonAmount: data.commonAmount,
+  }) * 1.18;
 }
 
 type SearchParams = Promise<{
