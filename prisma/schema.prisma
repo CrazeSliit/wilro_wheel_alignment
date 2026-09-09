@@ -1,0 +1,87 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  MANAGER
+  EMPLOYEE
+}
+
+enum EmailStatus {
+  PENDING
+  SENT
+  FAILED
+}
+
+enum Department {
+  SALES
+  SERVICE
+  PARTS
+  ADMINISTRATION
+}
+
+model User {
+  id          String       @id @default(cuid())
+  email       String       @unique
+  password    String
+  name        String
+  role        Role         @default(EMPLOYEE)
+  phone       String?
+  jobTitle    String?
+  department  Department?
+  bio         String?
+  avatar      String?
+  isActive    Boolean      @default(true)
+  isFirstLogin Boolean     @default(true)
+  emailStatus EmailStatus  @default(PENDING)
+  emailSentAt DateTime?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  emailLogs   EmailLog[]
+  taxInvoices TaxInvoice[]
+}
+
+model EmailLog {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      String
+  recipient String
+  status    String
+  errorMsg  String?
+  sentAt    DateTime @default(now())
+
+  @@index([userId, sentAt])
+}
+
+model TaxInvoice {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  taxInvoiceNo   String
+  invoiceDate    DateTime
+  purchaserName  String?
+  paymentMode    String?
+  placeOfSupply  String?
+  totalAmount      Float    @default(0)
+  isPaid           Boolean  @default(false)
+  additionalInfo   String?
+  invoiceData      Json
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([userId, createdAt])
+  @@index([userId, taxInvoiceNo])
+}
