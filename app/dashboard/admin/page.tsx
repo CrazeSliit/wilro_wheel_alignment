@@ -4,7 +4,7 @@ import { getAdminDashboardStats, getRecentEmployees } from "@/app/actions/profil
 import EmailStatusBadge from "@/components/admin/EmailStatusBadge";
 import Greeting from "@/components/ui/Greeting";
 
-export const metadata = { title: "Admin Dashboard — Iruka Motors" };
+export const metadata = { title: "Admin Dashboard — Wilro Wheel Alignment" };
 
 export default async function AdminPage() {
   const session = await getSession();
@@ -32,7 +32,7 @@ export default async function AdminPage() {
           <div>
             <Greeting name={session?.name ?? "Admin"} />
             <p className="text-primary-foreground/70 text-sm mt-1.5">
-              Here&apos;s your Iruka Motors admin overview.
+              Here&apos;s your Wilro Wheel Alignment admin overview.
             </p>
           </div>
           <div className="flex gap-2 flex-wrap">

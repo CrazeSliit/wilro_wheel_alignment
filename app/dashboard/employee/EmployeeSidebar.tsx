@@ -20,7 +20,7 @@ const navItems = [
     ),
   },
   {
-    label: "Tax Invoice",
+    label: "Invoice",
     href: "/dashboard/employee/tax-invoice",
     exact: true,
     icon: (
@@ -99,18 +99,13 @@ export default function EmployeeSidebar({ name }: { name: string }) {
       {/* ── Brand ───────────────────────────────────── */}
       <div className="px-5 py-5 border-b border-sidebar-border">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-sidebar-primary flex items-center justify-center shrink-0 shadow-md">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="w-5 h-5 text-sidebar-primary-foreground">
-              <circle cx="5.5" cy="17.5" r="3.5" />
-              <circle cx="18.5" cy="17.5" r="3.5" />
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 6h-4l-3 5.5" />
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 6l3 5.5" />
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 11.5h9" />
-            </svg>
+          <div className="w-9 h-9 rounded-xl bg-white flex items-center justify-center shrink-0 shadow-md">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo.png" alt="Wilro Wheel Alignment" className="w-7 h-7 object-contain" />
           </div>
           <div className="min-w-0">
             <p className="text-sm font-bold text-sidebar-foreground leading-tight tracking-tight truncate">
-              Iruka Motors
+              Wilro Wheel Alignment
             </p>
             <div className="flex items-center gap-1.5 mt-0.5">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />

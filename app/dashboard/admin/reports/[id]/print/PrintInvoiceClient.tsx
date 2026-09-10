@@ -7,14 +7,42 @@ import type { InvoiceData } from "@/lib/invoice-types";
 
 export default function PrintInvoiceClient({ invoiceData }: { invoiceData: InvoiceData }) {
   useEffect(() => {
-    window.print();
+    // Wait for images (logo + watermark) to finish loading before printing —
+    // calling window.print() immediately on mount could fire before they
+    // fetch, printing them blank.
+    let printed = false;
+    const doPrint = () => {
+      if (printed) return;
+      printed = true;
+      window.print();
+    };
+
+    const imgs = Array.from(document.images);
+    const pending = imgs.filter((img) => !img.complete);
+
+    if (pending.length === 0) {
+      doPrint();
+    } else {
+      let remaining = pending.length;
+      const onSettled = () => {
+        remaining -= 1;
+        if (remaining <= 0) doPrint();
+      };
+      pending.forEach((img) => {
+        img.addEventListener("load", onSettled, { once: true });
+        img.addEventListener("error", onSettled, { once: true });
+      });
+    }
+
+    const safety = setTimeout(doPrint, 3000);
+    return () => clearTimeout(safety);
   }, []);
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <div className="no-print flex items-center justify-between gap-4 border-b border-border px-8 py-6">
         <div>
-          <h1 className="text-2xl font-bold text-foreground">Print Tax Invoice</h1>
+          <h1 className="text-2xl font-bold text-foreground">Print Invoice</h1>
           <p className="mt-0.5 text-sm text-muted-foreground">The browser print dialog opens automatically.</p>
         </div>
         <Link

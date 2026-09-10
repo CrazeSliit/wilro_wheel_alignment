@@ -5,7 +5,7 @@ import { getSession } from "@/lib/session";
 import InvoicePreview from "@/app/dashboard/employee/tax-invoice/InvoicePreview";
 import { InvoiceData } from "@/lib/invoice-types";
 
-export const metadata = { title: "Admin Tax Invoice Preview - Iruka Motors" };
+export const metadata = { title: "Admin Invoice Preview - Wilro Wheel Alignment" };
 
 export default async function AdminInvoicePreviewPage({
   params,

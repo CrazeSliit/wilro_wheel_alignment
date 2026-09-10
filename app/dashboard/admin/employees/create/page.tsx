@@ -2,7 +2,7 @@ import Link from "next/link";
 import CreateEmployeeForm from "@/components/admin/CreateEmployeeForm";
 import PageHeader from "@/components/ui/PageHeader";
 
-export const metadata = { title: "Create Employee - Iruka Motors" };
+export const metadata = { title: "Create Employee - Wilro Wheel Alignment" };
 
 export default function CreateEmployeePage() {
   return (

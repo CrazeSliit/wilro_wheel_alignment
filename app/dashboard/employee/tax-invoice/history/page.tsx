@@ -13,7 +13,7 @@ import InvoiceFilters from "./InvoiceFilters";
 import ExportButton from "./ExportButton";
 import ExportAllButton from "./ExportAllButton";
 
-export const metadata = { title: "Tax Invoice History — Iruka Motors" };
+export const metadata = { title: "Invoice History — Wilro Wheel Alignment" };
 
 const PAGE_SIZE = 15;
 
@@ -161,8 +161,8 @@ export default async function TaxInvoiceHistoryPage({
     <div className="flex flex-col min-h-screen bg-background">
       <div className="px-8 pt-8 pb-6">
         <PageHeader
-          title="Tax Invoice History"
-          subtitle="View all generated tax invoices created by all users."
+          title="Invoice History"
+          subtitle="View all generated invoices created by all users."
           actionLabel="Create New Invoice"
           actionHref="/dashboard/employee/tax-invoice"
         />
@@ -171,15 +171,15 @@ export default async function TaxInvoiceHistoryPage({
       <div className="flex-1 px-8 pb-8">
         {totalCount === 0 ? (
           <div className="rounded-2xl border border-dashed border-border bg-card p-10 text-center">
-            <h2 className="text-lg font-semibold text-foreground">No tax invoices yet</h2>
+            <h2 className="text-lg font-semibold text-foreground">No invoices yet</h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              Save an invoice from the tax invoice page and it will appear here.
+              Save an invoice from the invoice page and it will appear here.
             </p>
             <Link
               href="/dashboard/employee/tax-invoice"
               className="mt-5 inline-flex items-center rounded-xl bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:opacity-90"
             >
-              Create Tax Invoice
+              Create Invoice
             </Link>
           </div>
         ) : (

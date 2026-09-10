@@ -4,7 +4,7 @@ import prisma from "@/lib/db";
 import ProfileForm from "@/app/dashboard/employee/profile/ProfileForm";
 import AvatarUpload from "@/app/dashboard/employee/profile/AvatarUpload";
 
-export const metadata = { title: "Admin Profile — Iruka Motors" };
+export const metadata = { title: "Admin Profile — Wilro Wheel Alignment" };
 
 export default async function AdminProfilePage() {
   const session = await getSession();

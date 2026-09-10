@@ -1,7 +1,7 @@
 import LoginForm from "./LoginForm";
 
 export const metadata = {
-  title: "Sign in — Iruka Motors",
+  title: "Sign in — Wilro Wheel Alignment",
 };
 
 export default function LoginPage() {
@@ -38,15 +38,14 @@ export default function LoginPage() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              background: "rgba(255,255,255,0.1)",
+              background: "rgba(255,255,255,0.9)",
               backdropFilter: "blur(8px)",
             }}
           >
-            <span style={{ fontSize: 15, fontWeight: 900, color: "#fff", fontFamily: '"Arial Black", sans-serif', letterSpacing: -1 }}>
-              IM
-            </span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo.png" alt="Wilro Wheel Alignment" style={{ width: "78%", height: "78%", objectFit: "contain" }} />
           </div>
-          <span className="text-white/90 text-sm font-semibold tracking-wide">Iruka Motors</span>
+          <span className="text-white/90 text-sm font-semibold tracking-wide">Wilro Wheel Alignment</span>
         </div>
 
         {/* Centre: tagline */}
@@ -65,7 +64,7 @@ export default function LoginPage() {
 
         {/* Bottom: footer note */}
         <div className="relative z-10 px-10 pb-8">
-          <p className="text-white/25 text-xs">© {new Date().getFullYear()} Iruka Motors. All rights reserved.</p>
+          <p className="text-white/25 text-xs">© {new Date().getFullYear()} Wilro Wheel Alignment. All rights reserved.</p>
         </div>
       </div>
 
@@ -79,7 +78,7 @@ export default function LoginPage() {
               style={{
                 width: 64,
                 height: 64,
-                border: "2px solid rgb(112, 144, 200)",
+                border: "2px solid rgb(30, 58, 138)",
                 borderRadius: 12,
                 display: "flex",
                 alignItems: "center",
@@ -88,18 +87,15 @@ export default function LoginPage() {
                 background: "linear-gradient(135deg, rgb(232, 240, 254) 0%, rgb(200, 216, 248) 100%)",
               }}
             >
-              <div style={{ textAlign: "center", lineHeight: 1 }}>
-                <span style={{ fontSize: 24, fontWeight: 900, color: "rgb(96, 48, 160)", fontFamily: '"Arial Black", sans-serif' }}>I</span>
-                <span style={{ fontSize: 24, fontWeight: 900, color: "rgb(48, 96, 192)", fontFamily: '"Arial Black", sans-serif' }}>M</span>
-                <div style={{ width: 7, height: 7, background: "rgb(96, 48, 160)", borderRadius: "50%", marginLeft: "auto", marginTop: -3 }} />
-              </div>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo.png" alt="Wilro Wheel Alignment" style={{ width: "80%", height: "80%", objectFit: "contain" }} />
             </div>
           </div>
 
           {/* Heading */}
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-foreground">Welcome back</h1>
-            <p className="text-muted-foreground text-sm mt-1.5">Sign in to your Iruka Motors account</p>
+            <p className="text-muted-foreground text-sm mt-1.5">Sign in to your Wilro Wheel Alignment account</p>
           </div>
 
           <LoginForm />

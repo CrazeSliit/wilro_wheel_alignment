@@ -125,32 +125,29 @@ function FullLetterhead() {
   return (
     <div style={{ borderBottom: "2px solid #b0b8d0", flexShrink: 0 }}>
       <div style={{ display: "flex", alignItems: "center", gap: "16px", padding: "14px 20px 12px" }}>
-        <div style={{ width: "78px", height: "78px", border: "2px solid #7090c8", borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, background: "linear-gradient(135deg, #e8f0fe 0%, #c8d8f8 100%)" }}>
-          <div style={{ textAlign: "center", lineHeight: 1 }}>
-            <span style={{ fontSize: "30px", fontWeight: "900", color: "#6030a0", fontFamily: "Arial Black, sans-serif" }}>I</span>
-            <span style={{ fontSize: "30px", fontWeight: "900", color: "#3060c0", fontFamily: "Arial Black, sans-serif" }}>M</span>
-            <div style={{ width: "9px", height: "9px", background: "#6030a0", borderRadius: "50%", marginLeft: "auto", marginTop: "-4px" }} />
-          </div>
+        <div style={{ width: "78px", height: "78px", border: "2px solid #1e3a8a", borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, background: "linear-gradient(135deg, #e8f0fe 0%, #c8d8f8 100%)" }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo.png" alt="Wilro Wheel Alignment" style={{ width: "80%", height: "80%", objectFit: "contain" }} />
         </div>
         <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "8px" }}>
-          <h1 style={{ fontSize: "30px", fontWeight: "900", letterSpacing: "6px", margin: 0, fontFamily: "Arial Black, sans-serif", textAlign: "center", lineHeight: 1 }}>
-            <span style={{ color: "#6030a0" }}>IRUKA</span>
+          <h1 style={{ fontSize: "26px", fontWeight: "900", letterSpacing: "2px", margin: 0, fontFamily: "Arial Black, sans-serif", textAlign: "center", lineHeight: 1 }}>
+            <span style={{ color: "#f97316" }}>WILRO</span>
             <span style={{ color: "#b0b8d0" }}>&nbsp;&nbsp;</span>
-            <span style={{ color: "#3060c0" }}>MOTORS</span>
+            <span style={{ color: "#1e3a8a" }}>WHEEL ALIGNMENT</span>
           </h1>
           <div style={{ height: "1px", background: "#d0d8ec", width: "100%" }} />
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "2px 0", fontSize: "11px", color: "#3a4560", fontFamily: "Arial, sans-serif" }}>
-            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><span style={{ color: "#7090c8", fontWeight: "700" }}>📍</span> NO : A/G/9</span>
-            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><span style={{ color: "#7090c8", fontWeight: "700" }}>📍</span> Sri Sangaraja Mawatha</span>
-            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><span style={{ color: "#7090c8", fontWeight: "700" }}>📍</span> Colombo - 10</span>
-            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><span style={{ color: "#3060c0", fontWeight: "700" }}>📞</span> 071-3283005</span>
-            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><span style={{ color: "#3060c0", fontWeight: "700" }}>✉</span> irukamotors@gmail.com</span>
-            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><span style={{ color: "#6030a0", fontWeight: "700" }}>✒️</span>VAT No:108995203-7000</span>
+            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><span style={{ color: "#1e3a8a", fontWeight: "700" }}>📍</span> 405, Colombo Road</span>
+            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><span style={{ color: "#1e3a8a", fontWeight: "700" }}>📍</span> Bandiyamulla</span>
+            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><span style={{ color: "#1e3a8a", fontWeight: "700" }}>📍</span> Gampaha</span>
+            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><span style={{ color: "#f97316", fontWeight: "700" }}>📞</span> 077 283 0826</span>
+            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><span style={{ color: "#f97316", fontWeight: "700" }}>📞</span> 033 223 9257</span>
+            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><span style={{ color: "#f97316", fontWeight: "700" }}>✉</span> wilroenter8@gmail.com</span>
           </div>
         </div>
       </div>
       <div style={{ background: "#e8eef8", padding: "5px 20px", fontSize: "9.5px", color: "#3a4560", textTransform: "uppercase", letterSpacing: "1px", textAlign: "center", fontFamily: "Arial, sans-serif", borderTop: "1px solid #d0d8ec" }}>
-        Supply of Motor Vehicle Spare Parts &amp; Service to Government Offices (Strong &amp; Supplying)
+        Precision Wheel Alignment, Balancing &amp; Automotive Care Services
       </div>
     </div>
   );
@@ -296,20 +293,35 @@ export default function InvoiceForm({ data, onChange }: Props) {
           flexDirection: "column",
           fontFamily: "Arial, sans-serif",
           boxSizing: "border-box",
+          position: "relative",
+          isolation: "isolate",
         }}
       >
+        {/* Company logo watermark — the real logo artwork, undistorted, centered faintly behind the content */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: -1,
+            pointerEvents: "none",
+          }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo.png" alt="" style={{ width: "340px", height: "auto", opacity: 0.08 }} />
+        </div>
+
         <FullLetterhead />
 
         <div style={{ flex: 1, position: "relative", display: "flex", flexDirection: "column", padding: "12px 20px 14px", overflow: "hidden" }}>
-
-          {/* Watermark */}
-          <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", fontSize: "160px", fontWeight: "900", color: "rgba(100,120,180,0.05)", fontFamily: "Arial Black, sans-serif", pointerEvents: "none", whiteSpace: "nowrap", zIndex: 0, letterSpacing: "-8px" }}>IM.</div>
 
           <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column" }}>
 
             {/* Header fields */}
             <div style={{ textAlign: "center", marginBottom: "10px" }}>
-              <span style={{ border: "1px solid #2a3560", padding: "3px 28px", fontSize: "12px", fontWeight: "600", color: "#1a2540", letterSpacing: "1px" }}>Tax Invoice</span>
+              <span style={{ border: "1px solid #2a3560", padding: "3px 28px", fontSize: "12px", fontWeight: "600", color: "#1a2540", letterSpacing: "1px" }}>Invoice</span>
             </div>
 
             <table style={{ width: "100%", borderCollapse: "collapse" }}>
@@ -321,8 +333,8 @@ export default function InvoiceForm({ data, onChange }: Props) {
                     {data.invoiceDate && <span style={{ color: "#1a2540", fontWeight: 600, marginLeft: "4px" }}>({formatDate(data.invoiceDate)})</span>}
                   </td>
                   <td style={cell()}>
-                    <span style={{ color: labelColor }}>Tax Invoice No.: </span>
-                    <input type="text" value={data.taxInvoiceNo} onChange={(e) => update("taxInvoiceNo", e.target.value)} placeholder="e.g. INV-2024-001" style={{ ...inpStyle, width: "auto", minWidth: "170px" }} title="Tax Invoice No." />
+                    <span style={{ color: labelColor }}>Invoice No.: </span>
+                    <input type="text" value={data.taxInvoiceNo} onChange={(e) => update("taxInvoiceNo", e.target.value)} placeholder="e.g. INV-2024-001" style={{ ...inpStyle, width: "auto", minWidth: "170px" }} title="Invoice No." />
                   </td>
                 </tr>
               </tbody>
@@ -525,7 +537,7 @@ export default function InvoiceForm({ data, onChange }: Props) {
               </div>
               <div style={{ textAlign: "center", marginTop: "14px", paddingTop: "8px", borderTop: "1px solid #c0cce0" }}>
                 <p style={{ fontSize: "8.5px", color: "#8090b0", letterSpacing: "0.8px", textTransform: "uppercase", margin: 0 }}>
-                  This is a computer-generated tax invoice — Iruka Motors, Colombo 10 — irukamotors@gmail.com
+                  This is a computer-generated tax invoice — Wilro Wheel Alignment, Bandiyamulla, Gampaha — wilroenter8@gmail.com
                 </p>
               </div>
             </div>
@@ -678,45 +690,56 @@ function ExtraSheetForm({
 
   return (
     <>
-    <div className="bg-white shadow-lg mx-auto" style={{ width: "210mm", minHeight: "297mm", display: "flex", flexDirection: "column", fontFamily: "Arial, sans-serif", boxSizing: "border-box", marginTop: "24px" }}>
+    <div className="bg-white shadow-lg mx-auto" style={{ width: "210mm", minHeight: "297mm", display: "flex", flexDirection: "column", fontFamily: "Arial, sans-serif", boxSizing: "border-box", marginTop: "24px", position: "relative", isolation: "isolate" }}>
+      {/* Company logo watermark — the real logo artwork, undistorted, centered faintly behind the content */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          zIndex: -1,
+          pointerEvents: "none",
+        }}
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/logo.png" alt="" style={{ width: "340px", height: "auto", opacity: 0.08 }} />
+      </div>
       {/* Letterhead */}
       <div style={{ borderBottom: "2px solid #b0b8d0", flexShrink: 0 }}>
         <div style={{ display: "flex", alignItems: "center", gap: "16px", padding: "14px 20px 12px" }}>
-          <div style={{ width: "78px", height: "78px", border: "2px solid #7090c8", borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, background: "linear-gradient(135deg,#e8f0fe 0%,#c8d8f8 100%)" }}>
-            <div style={{ textAlign: "center", lineHeight: 1 }}>
-              <span style={{ fontSize: "30px", fontWeight: "900", color: "#6030a0", fontFamily: "Arial Black, sans-serif" }}>I</span>
-              <span style={{ fontSize: "30px", fontWeight: "900", color: "#3060c0", fontFamily: "Arial Black, sans-serif" }}>M</span>
-              <div style={{ width: "9px", height: "9px", background: "#6030a0", borderRadius: "50%", marginLeft: "auto", marginTop: "-4px" }} />
-            </div>
+          <div style={{ width: "78px", height: "78px", border: "2px solid #1e3a8a", borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, background: "linear-gradient(135deg,#e8f0fe 0%,#c8d8f8 100%)" }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo.png" alt="Wilro Wheel Alignment" style={{ width: "80%", height: "80%", objectFit: "contain" }} />
           </div>
           <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "8px" }}>
-            <h1 style={{ fontSize: "30px", fontWeight: "900", letterSpacing: "6px", margin: 0, fontFamily: "Arial Black, sans-serif", textAlign: "center", lineHeight: 1 }}>
-              <span style={{ color: "#6030a0" }}>IRUKA</span><span style={{ color: "#b0b8d0" }}>&nbsp;&nbsp;</span><span style={{ color: "#3060c0" }}>MOTORS</span>
+            <h1 style={{ fontSize: "26px", fontWeight: "900", letterSpacing: "2px", margin: 0, fontFamily: "Arial Black, sans-serif", textAlign: "center", lineHeight: 1 }}>
+              <span style={{ color: "#f97316" }}>WILRO</span><span style={{ color: "#b0b8d0" }}>&nbsp;&nbsp;</span><span style={{ color: "#1e3a8a" }}>WHEEL ALIGNMENT</span>
             </h1>
             <div style={{ height: "1px", background: "#d0d8ec", width: "100%" }} />
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "2px 0", fontSize: "11px", color: "#3a4560", fontFamily: "Arial, sans-serif" }}>
-              <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><span style={{ color: "#7090c8", fontWeight: "700" }}>📍</span> NO : A/G/9</span>
-              <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><span style={{ color: "#7090c8", fontWeight: "700" }}>📍</span> Sri Sangaraja Mawatha</span>
-              <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><span style={{ color: "#7090c8", fontWeight: "700" }}>📍</span> Colombo - 10</span>
-              <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><span style={{ color: "#3060c0", fontWeight: "700" }}>📞</span> 071-3283005</span>
-              <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><span style={{ color: "#3060c0", fontWeight: "700" }}>📞</span> 077-1603968</span>
-              <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><span style={{ color: "#6030a0", fontWeight: "700" }}>✉</span> irukamotors@gmail.com</span>
+              <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><span style={{ color: "#1e3a8a", fontWeight: "700" }}>📍</span> 405, Colombo Road</span>
+              <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><span style={{ color: "#1e3a8a", fontWeight: "700" }}>📍</span> Bandiyamulla</span>
+              <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><span style={{ color: "#1e3a8a", fontWeight: "700" }}>📍</span> Gampaha</span>
+              <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><span style={{ color: "#f97316", fontWeight: "700" }}>📞</span> 077 283 0826</span>
+              <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><span style={{ color: "#f97316", fontWeight: "700" }}>📞</span> 033 223 9257</span>
+              <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><span style={{ color: "#f97316", fontWeight: "700" }}>✉</span> wilroenter8@gmail.com</span>
             </div>
           </div>
         </div>
         <div style={{ background: "#e8eef8", padding: "5px 20px", fontSize: "9.5px", color: "#3a4560", textTransform: "uppercase", letterSpacing: "1px", textAlign: "center", fontFamily: "Arial, sans-serif", borderTop: "1px solid #d0d8ec", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <span>Supply of Motor Vehicle Spare Parts &amp; Service to Government Offices (Strong &amp; Supplying)</span>
+          <span>Precision Wheel Alignment, Balancing &amp; Automotive Care Services</span>
           <button onClick={removeSheet} style={{ background: "#fee2e2", border: "1px solid #fca5a5", color: "#dc2626", borderRadius: "6px", padding: "2px 8px", fontSize: "10px", cursor: "pointer", fontFamily: "Arial, sans-serif", textTransform: "none", letterSpacing: "0" }}>✕ Remove Sheet</button>
         </div>
       </div>
 
       {/* Body */}
       <div style={{ flex: 1, position: "relative", display: "flex", flexDirection: "column", padding: "12px 20px 14px" }}>
-        <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", fontSize: "160px", fontWeight: "900", color: "rgba(100,120,180,0.05)", fontFamily: "Arial Black, sans-serif", pointerEvents: "none", whiteSpace: "nowrap", zIndex: 0, letterSpacing: "-8px" }}>IM.</div>
         <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column" }}>
 
           <div style={{ textAlign: "center", marginBottom: "10px" }}>
-            <span style={{ border: "1px solid #2a3560", padding: "3px 28px", fontSize: "12px", fontWeight: "600", color: "#1a2540", letterSpacing: "1px" }}>Tax Invoice</span>
+            <span style={{ border: "1px solid #2a3560", padding: "3px 28px", fontSize: "12px", fontWeight: "600", color: "#1a2540", letterSpacing: "1px" }}>Invoice</span>
           </div>
 
           <table style={{ width: "100%", borderCollapse: "collapse" }}>
@@ -728,7 +751,7 @@ function ExtraSheetForm({
                   {data.invoiceDate && <span style={{ color: "#1a2540", fontWeight: 600, marginLeft: "4px" }}>({formatDate(data.invoiceDate)})</span>}
                 </td>
                 <td style={cell()}>
-                  <span style={{ color: labelColor }}>Tax Invoice No.: </span>
+                  <span style={{ color: labelColor }}>Invoice No.: </span>
                   <input type="text" value={data.taxInvoiceNo} onChange={(e) => onChange({ ...data, taxInvoiceNo: e.target.value })} placeholder="e.g. INV-2024-001" style={{ ...inpStyle, width: "auto", minWidth: "170px" }} />
                 </td>
               </tr>
@@ -860,7 +883,7 @@ function ExtraSheetForm({
             </div>
             <div style={{ textAlign: "center", marginTop: "14px", paddingTop: "8px", borderTop: "1px solid #c0cce0" }}>
               <p style={{ fontSize: "8.5px", color: "#8090b0", letterSpacing: "0.8px", textTransform: "uppercase", margin: 0 }}>
-                This is a computer-generated tax invoice — Iruka Motors, Colombo 10 — irukamotors@gmail.com
+                This is a computer-generated tax invoice — Wilro Wheel Alignment, Bandiyamulla, Gampaha — wilroenter8@gmail.com
               </p>
             </div>
           </div>

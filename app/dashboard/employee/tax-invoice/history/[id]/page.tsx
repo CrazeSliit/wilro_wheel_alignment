@@ -5,7 +5,7 @@ import { getSession } from "@/lib/session";
 import InvoicePreview from "../../InvoicePreview";
 import { InvoiceData } from "@/lib/invoice-types";
 
-export const metadata = { title: "Tax Invoice Details — Iruka Motors" };
+export const metadata = { title: "Invoice Details — Wilro Wheel Alignment" };
 
 export default async function TaxInvoiceHistoryItemPage({
   params,
@@ -40,7 +40,7 @@ export default async function TaxInvoiceHistoryItemPage({
       <div className="border-b border-border px-8 py-6 no-print">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <p className="text-sm text-muted-foreground">Tax Invoice Details</p>
+            <p className="text-sm text-muted-foreground">Invoice Details</p>
             <h1 className="text-2xl font-bold text-foreground">{invoice.taxInvoiceNo}</h1>
             <p className="mt-1 text-sm text-muted-foreground">
               Created on {invoice.createdAt.toLocaleString("en-US")}

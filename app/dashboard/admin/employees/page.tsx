@@ -3,7 +3,7 @@ import { getAllEmployees } from "@/app/actions/profile";
 import EmployeeTable from "@/components/admin/EmployeeTable";
 import PageHeader from "@/components/ui/PageHeader";
 
-export const metadata = { title: "Employees - Iruka Motors" };
+export const metadata = { title: "Employees - Wilro Wheel Alignment" };
 
 type SearchParams = Promise<{ search?: string; page?: string }>;
 

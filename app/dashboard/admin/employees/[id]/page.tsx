@@ -5,7 +5,7 @@ import ResendCredentialsButton from "@/components/admin/ResendCredentialsButton"
 import ConfirmModalClient from "@/components/ui/ConfirmModalClient";
 import StatusBadge from "@/components/ui/StatusBadge";
 
-export const metadata = { title: "Employee Details - Iruka Motors" };
+export const metadata = { title: "Employee Details - Wilro Wheel Alignment" };
 
 export default async function EmployeeDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;

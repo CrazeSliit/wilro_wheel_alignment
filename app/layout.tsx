@@ -19,9 +19,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Iruka Motors — Premium Motorcycles & Services",
+  title: "Wilro Wheel Alignment — Precision Wheel Alignment & Automotive Care",
   description:
-    "Iruka Motors — your trusted destination for new & used motorcycles, expert servicing, and genuine parts.",
+    "Wilro Wheel Alignment — your trusted destination for precision wheel alignment, balancing, and automotive care services.",
 };
 
 export default function RootLayout({

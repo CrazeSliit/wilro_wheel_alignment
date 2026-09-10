@@ -3,7 +3,7 @@ import ChangePasswordForm from "@/app/change-password/ChangePasswordForm";
 import { getSession } from "@/lib/session";
 import prisma from "@/lib/db";
 
-export const metadata = { title: "Change Password - Iruka Motors" };
+export const metadata = { title: "Change Password - Wilro Wheel Alignment" };
 
 export default async function ChangePasswordPage() {
   const session = await getSession();

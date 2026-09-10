@@ -4,7 +4,7 @@ import { getSession } from "@/lib/session";
 import type { InvoiceData } from "@/lib/invoice-types";
 import PrintInvoiceClient from "./PrintInvoiceClient";
 
-export const metadata = { title: "Print Tax Invoice - Admin - Iruka Motors" };
+export const metadata = { title: "Print Invoice - Admin - Wilro Wheel Alignment" };
 
 export default async function AdminPrintTaxInvoicePage({
   params,

@@ -18,7 +18,7 @@ const DEFAULT_ROW_PX = 28;   // one item row (cell height 28 px + border) fallba
 // Recalibrated so the first page can actually hold 16 rows before breaking.
 //   FullLetterhead …………………………………………………………… 130
 //   body padding-top ………………………………………………………  12
-//   "Tax Invoice" label + margin …………………………………………  33
+//   "Invoice" label + margin ……………………………………………………  33
 //   Date / Invoice No row ………………………………………………… 34
 //   Supplier–Purchaser table (5 rows) …………………………………… 148
 //   items-table header row ………………………………………………  26
@@ -146,17 +146,17 @@ function CompactHeader({
   return (
     <div style={{ borderBottom: "2px solid #b0b8d0", padding: "8px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0 }}>
       <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-        <div style={{ width: "36px", height: "36px", border: "1.5px solid #7090c8", borderRadius: "6px", display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg,#e8f0fe,#c8d8f8)", flexShrink: 0 }}>
-          <span style={{ fontSize: "13px", fontWeight: "900", color: "#6030a0", fontFamily: "Arial Black, sans-serif" }}>I</span>
-          <span style={{ fontSize: "13px", fontWeight: "900", color: "#3060c0", fontFamily: "Arial Black, sans-serif" }}>M</span>
+        <div style={{ width: "36px", height: "36px", border: "1.5px solid #1e3a8a", borderRadius: "6px", display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg,#e8f0fe,#c8d8f8)", flexShrink: 0 }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo.png" alt="Wilro Wheel Alignment" style={{ width: "76%", height: "76%", objectFit: "contain" }} />
         </div>
         <div>
-          <div style={{ fontSize: "14px", fontWeight: "900", letterSpacing: "3px", fontFamily: "Arial Black, sans-serif" }}>
-            <span style={{ color: "#6030a0" }}>IRUKA</span>&nbsp;
-            <span style={{ color: "#3060c0" }}>MOTORS</span>
+          <div style={{ fontSize: "12px", fontWeight: "900", letterSpacing: "1px", fontFamily: "Arial Black, sans-serif" }}>
+            <span style={{ color: "#f97316" }}>WILRO</span>&nbsp;
+            <span style={{ color: "#1e3a8a" }}>WHEEL ALIGNMENT</span>
           </div>
           <div style={{ fontSize: "9px", color: labelColor }}>
-            Tax Invoice No: <strong style={{ color: "#1a2540" }}>{invoiceNo}</strong>
+            Invoice No: <strong style={{ color: "#1a2540" }}>{invoiceNo}</strong>
             &nbsp;|&nbsp; Date: <strong style={{ color: "#1a2540" }}>{fmtDate(invoiceDate)}</strong>
           </div>
         </div>
@@ -173,32 +173,29 @@ function FullLetterhead({ pageNumber, totalPages }: { pageNumber?: number; total
   return (
     <div style={{ borderBottom: "2px solid #b0b8d0", flexShrink: 0 }}>
       <div style={{ display: "flex", alignItems: "center", gap: "16px", padding: "14px 20px 12px" }}>
-        <div style={{ width: "78px", height: "78px", border: "2px solid #7090c8", borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, background: "linear-gradient(135deg,#e8f0fe 0%,#c8d8f8 100%)" }}>
-          <div style={{ textAlign: "center", lineHeight: 1 }}>
-            <span style={{ fontSize: "30px", fontWeight: "900", color: "#6030a0", fontFamily: "Arial Black, sans-serif" }}>I</span>
-            <span style={{ fontSize: "30px", fontWeight: "900", color: "#3060c0", fontFamily: "Arial Black, sans-serif" }}>M</span>
-            <div style={{ width: "9px", height: "9px", background: "#6030a0", borderRadius: "50%", marginLeft: "auto", marginTop: "-4px" }} />
-          </div>
+        <div style={{ width: "78px", height: "78px", border: "2px solid #1e3a8a", borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, background: "linear-gradient(135deg,#e8f0fe 0%,#c8d8f8 100%)" }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo.png" alt="Wilro Wheel Alignment" style={{ width: "80%", height: "80%", objectFit: "contain" }} />
         </div>
         <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "8px" }}>
-          <h1 style={{ fontSize: "30px", fontWeight: "900", letterSpacing: "6px", margin: 0, fontFamily: "Arial Black, sans-serif", textAlign: "center", lineHeight: 1 }}>
-            <span style={{ color: "#6030a0" }}>IRUKA</span>
+          <h1 style={{ fontSize: "26px", fontWeight: "900", letterSpacing: "2px", margin: 0, fontFamily: "Arial Black, sans-serif", textAlign: "center", lineHeight: 1 }}>
+            <span style={{ color: "#f97316" }}>WILRO</span>
             <span style={{ color: "#b0b8d0" }}>&nbsp;&nbsp;</span>
-            <span style={{ color: "#3060c0" }}>MOTORS</span>
+            <span style={{ color: "#1e3a8a" }}>WHEEL ALIGNMENT</span>
           </h1>
           <div style={{ height: "1px", background: "#d0d8ec", width: "100%" }} />
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "2px 0", fontSize: "11px", color: "#3a4560" }}>
-            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><span style={{ color: "#7090c8", fontWeight: "700" }}>📍</span> NO : A/G/9</span>
-            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><span style={{ color: "#7090c8", fontWeight: "700" }}>📍</span> Sri Sangaraja Mawatha</span>
-            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><span style={{ color: "#7090c8", fontWeight: "700" }}>📍</span> Colombo - 10</span>
-            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><span style={{ color: "#3060c0", fontWeight: "700" }}>📞</span> 071-3283005</span>
-            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><span style={{ color: "#3060c0", fontWeight: "700" }}>✉</span> irukamotors@gmail.com</span>
-            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><span style={{ color: "#6030a0", fontWeight: "700" }}>✒️</span>VAT No:108995203-7000</span>
+            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><span style={{ color: "#1e3a8a", fontWeight: "700" }}>📍</span> 405, Colombo Road</span>
+            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><span style={{ color: "#1e3a8a", fontWeight: "700" }}>📍</span> Bandiyamulla</span>
+            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><span style={{ color: "#1e3a8a", fontWeight: "700" }}>📍</span> Gampaha</span>
+            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><span style={{ color: "#f97316", fontWeight: "700" }}>📞</span> 077 283 0826</span>
+            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><span style={{ color: "#f97316", fontWeight: "700" }}>📞</span> 033 223 9257</span>
+            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><span style={{ color: "#f97316", fontWeight: "700" }}>✉</span> wilroenter8@gmail.com</span>
           </div>
         </div>
       </div>
       <div style={{ background: "#e8eef8", padding: "5px 20px", fontSize: "9.5px", color: "#3a4560", textTransform: "uppercase", letterSpacing: "1px", borderTop: "1px solid #d0d8ec", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <span>Supply of Motor Vehicle Spare Parts &amp; Service to Government Offices (Strong &amp; Supplying)</span>
+        <span>Precision Wheel Alignment, Balancing &amp; Automotive Care Services</span>
         {pageNumber !== undefined && totalPages !== undefined && (
           <span style={{ fontWeight: "700", color: "#1a2540", whiteSpace: "nowrap", marginLeft: "16px", textTransform: "none", letterSpacing: "0.5px" }}>
             Page {pageNumber} of {totalPages}
@@ -233,8 +230,29 @@ function InvoicePage({
         overflow: autoGrow ? "visible" : "hidden",
         background: "white",
         boxShadow: shadow ? "0 2px 12px rgba(0,0,0,0.12)" : "none",
+        position: "relative",
+        isolation: "isolate",
       }}
     >
+      {/* Company logo watermark — the real logo artwork, undistorted, centered faintly behind the content */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          zIndex: -1,
+          pointerEvents: "none",
+        }}
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/logo.png"
+          alt=""
+          style={{ width: "340px", height: "auto", opacity: 0.08 }}
+        />
+      </div>
       {children}
     </div>
   );
@@ -254,7 +272,7 @@ function SignatureBlock() {
       </div>
       <div style={{ marginTop: "4px", paddingTop: "2px", borderTop: "1px solid #c0cce0", padding: "2px 20px 0" }}>
         <p style={{ fontSize: "8.5px", color: "#8090b0", letterSpacing: "0.8px", textTransform: "uppercase", margin: 0 }}>
-          This is a computer-generated tax invoice — Iruka Motors, Colombo 10 — irukamotors@gmail.com
+          This is a computer-generated tax invoice — Wilro Wheel Alignment, Bandiyamulla, Gampaha — wilroenter8@gmail.com
         </p>
       </div>
     </div>
@@ -406,9 +424,6 @@ function ExtraSheetPages({
 
             {/* Body */}
             <div style={{ flex: 1, position: "relative", display: "flex", flexDirection: "column", padding: isFirst ? "12px 20px 4px" : shiftUpForLongInvoice ? "10px 20px 0" : "24px 20px 2px", overflow: "hidden" }}>
-              {isFirst && (
-                <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", fontSize: "160px", fontWeight: "900", color: "rgba(100,120,180,0.05)", fontFamily: "Arial Black, sans-serif", pointerEvents: "none", whiteSpace: "nowrap", zIndex: 0, letterSpacing: "-8px" }}>IM.</div>
-              )}
 
               <div style={{ position: "relative", zIndex: 1, flex: 1, display: "flex", flexDirection: "column" }}>
 
@@ -417,14 +432,14 @@ function ExtraSheetPages({
                   <>
                     <div style={{ textAlign: "center", marginBottom: "10px" }}>
                       <span style={{ border: "1px solid #2a3560", padding: "3px 28px", fontSize: "12px", fontWeight: "600", color: "#1a2540", letterSpacing: "1px" }}>
-                        Tax Invoice
+                        Invoice
                       </span>
                     </div>
                     <table style={{ width: "100%", borderCollapse: "collapse" }}>
                       <tbody>
                         <tr>
                           <td style={cell({ width: "50%" })}><span style={{ color: labelColor }}>Date of Invoice: </span><strong>{fmtDate(data.invoiceDate)}</strong></td>
-                          <td style={cell()}><span style={{ color: labelColor }}>Tax Invoice No.: </span><strong>{data.taxInvoiceNo}</strong></td>
+                          <td style={cell()}><span style={{ color: labelColor }}>Invoice No.: </span><strong>{data.taxInvoiceNo}</strong></td>
                         </tr>
                       </tbody>
                     </table>
@@ -643,9 +658,6 @@ export default function InvoicePreview({ data, autoGrowPages = false }: Props) {
 
             {/* Body */}
             <div style={{ flex: 1, position: "relative", display: "flex", flexDirection: "column", padding: isFirst ? "12px 20px 4px" : hasExtra && totalPages > 2 ? "10px 20px 0" : "24px 20px 2px", overflow: "hidden" }}>
-              {isFirst && (
-                <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", fontSize: "160px", fontWeight: "900", color: "rgba(100,120,180,0.05)", fontFamily: "Arial Black, sans-serif", pointerEvents: "none", whiteSpace: "nowrap", zIndex: 0, letterSpacing: "-8px" }}>IM.</div>
-              )}
 
               <div style={{ position: "relative", zIndex: 1, flex: 1, display: "flex", flexDirection: "column" }}>
 
@@ -654,14 +666,14 @@ export default function InvoicePreview({ data, autoGrowPages = false }: Props) {
                   <>
                     <div style={{ textAlign: "center", marginBottom: "10px" }}>
                       <span style={{ border: "1px solid #2a3560", padding: "3px 28px", fontSize: "12px", fontWeight: "600", color: "#1a2540", letterSpacing: "1px" }}>
-                        Tax Invoice
+                        Invoice
                       </span>
                     </div>
                     <table style={{ width: "100%", borderCollapse: "collapse" }}>
                       <tbody>
                         <tr>
                           <td style={cell({ width: "50%" })}><span style={{ color: labelColor }}>Date of Invoice: </span><strong>{fmtDate(data.invoiceDate)}</strong></td>
-                          <td style={cell()}><span style={{ color: labelColor }}>Tax Invoice No.: </span><strong>{data.taxInvoiceNo}</strong></td>
+                          <td style={cell()}><span style={{ color: labelColor }}>Invoice No.: </span><strong>{data.taxInvoiceNo}</strong></td>
                         </tr>
                       </tbody>
                     </table>

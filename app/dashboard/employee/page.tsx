@@ -4,7 +4,7 @@ import { getSession } from "@/lib/session";
 import prisma from "@/lib/db";
 import Greeting from "@/components/ui/Greeting";
 
-export const metadata = { title: "Dashboard — Iruka Motors" };
+export const metadata = { title: "Dashboard — Wilro Wheel Alignment" };
 
 const departmentLabels: Record<string, string> = {
   SALES: "Sales",
@@ -108,7 +108,7 @@ export default async function EmployeePage() {
             />
             <QuickAction
               href="/dashboard/employee/tax-invoice"
-              title="Tax Invoice"
+              title="Invoice"
               description="Create and print Sri Lankan tax invoices."
               iconBg="bg-emerald-50 dark:bg-emerald-900/20"
               iconColor="text-emerald-600"

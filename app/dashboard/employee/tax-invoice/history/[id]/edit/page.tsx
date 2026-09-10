@@ -4,7 +4,7 @@ import { getSession } from "@/lib/session";
 import { getTaxInvoiceById } from "@/app/actions/tax-invoice";
 import EditInvoiceClient from "./EditInvoiceClient";
 
-export const metadata = { title: "Edit Tax Invoice - Iruka Motors" };
+export const metadata = { title: "Edit Invoice - Wilro Wheel Alignment" };
 
 export default async function EditTaxInvoicePage({
   params,
@@ -28,7 +28,7 @@ export default async function EditTaxInvoicePage({
       <div className="border-b border-border px-8 py-6">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <p className="text-sm text-muted-foreground">Tax Invoice</p>
+            <p className="text-sm text-muted-foreground">Invoice</p>
             <h1 className="text-2xl font-bold text-foreground">Edit Invoice</h1>
             <p className="mt-1 text-sm text-muted-foreground">
               Update details and save changes to history.

@@ -44,7 +44,8 @@ export default function TaxInvoicePage() {
 
     printWin.document.write(`<!DOCTYPE html><html><head>
 <meta charset="utf-8">
-<title>Tax Invoice</title>
+<base href="${window.location.origin}/">
+<title>Invoice</title>
 <style>
   @page { size: A4 portrait; margin: 0mm; }
   * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; box-sizing: border-box; }
@@ -55,9 +56,38 @@ export default function TaxInvoicePage() {
 </style>
 </head><body>${el.outerHTML}</body></html>`);
     printWin.document.close();
-    printWin.focus();
-    printWin.print();
-    printWin.close();
+
+    let printed = false;
+    const doPrint = () => {
+      if (printed) return;
+      printed = true;
+      printWin.focus();
+      printWin.print();
+      printWin.close();
+    };
+
+    // Wait for the popup's images (logo + watermark) to finish loading before
+    // printing — printing immediately after document.close() can fire before
+    // they finish fetching, so they print blank.
+    const imgs = Array.from(printWin.document.images);
+    const pending = imgs.filter((img) => !img.complete);
+
+    if (pending.length === 0) {
+      doPrint();
+    } else {
+      let remaining = pending.length;
+      const onSettled = () => {
+        remaining -= 1;
+        if (remaining <= 0) doPrint();
+      };
+      pending.forEach((img) => {
+        img.addEventListener("load", onSettled, { once: true });
+        img.addEventListener("error", onSettled, { once: true });
+      });
+    }
+
+    // Safety net in case an image never settles.
+    setTimeout(doPrint, 3000);
   };
 
   const handleAddSheet = () => {
@@ -80,7 +110,7 @@ export default function TaxInvoicePage() {
       {/* ── Header ──────────────────────────────────── */}
       <div className="no-print px-8 pt-8 pb-5 border-b border-border flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-foreground">Tax Invoice</h1>
+          <h1 className="text-2xl font-bold text-foreground">Invoice</h1>
           <p className="text-sm text-muted-foreground mt-0.5">
             Fill in the details, preview, then print or save as PDF.
           </p>

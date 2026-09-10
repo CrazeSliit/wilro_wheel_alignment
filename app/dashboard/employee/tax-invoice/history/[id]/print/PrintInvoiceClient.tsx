@@ -12,6 +12,7 @@ export default function PrintInvoiceClient({ invoiceData }: { invoiceData: Invoi
 
     const html = `<!DOCTYPE html><html><head>
 <meta charset="utf-8">
+<base href="${window.location.origin}/">
 <title></title>
 <style>
   @page { size: A4 portrait; margin: 0; }
@@ -28,19 +29,48 @@ export default function PrintInvoiceClient({ invoiceData }: { invoiceData: Invoi
     const printWin = window.open(blobUrl, "_blank");
     if (!printWin) { URL.revokeObjectURL(blobUrl); return; }
 
-    setTimeout(() => {
+    let printed = false;
+    const doPrint = () => {
+      if (printed) return;
+      printed = true;
       printWin.focus();
       printWin.print();
       printWin.close();
       URL.revokeObjectURL(blobUrl);
-    }, 500);
+    };
+
+    // Wait for the popup document (and its images — logo + watermark) to fully
+    // load before printing; a fixed setTimeout was firing before the images
+    // finished fetching, so they printed blank.
+    printWin.addEventListener("load", () => {
+      const imgs = Array.from(printWin.document.images);
+      const pending = imgs.filter((img) => !img.complete);
+
+      if (pending.length === 0) {
+        doPrint();
+        return;
+      }
+
+      let remaining = pending.length;
+      const onSettled = () => {
+        remaining -= 1;
+        if (remaining <= 0) doPrint();
+      };
+      pending.forEach((img) => {
+        img.addEventListener("load", onSettled, { once: true });
+        img.addEventListener("error", onSettled, { once: true });
+      });
+    });
+
+    // Safety net in case the load event or an image never settles.
+    setTimeout(doPrint, 3000);
   }, []);
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <div className="no-print border-b border-border px-8 py-6 flex items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-foreground">Print Tax Invoice</h1>
+          <h1 className="text-2xl font-bold text-foreground">Print Invoice</h1>
           <p className="text-sm text-muted-foreground mt-0.5">The browser print dialog opens automatically.</p>
         </div>
         <Link href="/dashboard/employee/tax-invoice/history" className="rounded-xl border border-border px-4 py-2 text-sm font-medium text-foreground hover:bg-muted transition">
