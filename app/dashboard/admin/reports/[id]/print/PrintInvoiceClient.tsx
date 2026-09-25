@@ -49,7 +49,7 @@ export default function PrintInvoiceClient({ invoiceData }: { invoiceData: Invoi
           href="/dashboard/admin/reports"
           className="rounded-xl border border-border px-4 py-2 text-sm font-medium text-foreground transition hover:bg-muted"
         >
-          Back to Reports
+          Back to  Reports
         </Link>
       </div>
 
