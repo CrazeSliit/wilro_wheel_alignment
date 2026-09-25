@@ -179,4 +179,36 @@
   .no-print {
     display: none !important;
   }
+
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: white !important;
+  }
+
+  /* Strip the on-screen scroll container's padding/background so each
+     .invoice-page prints as a full, unscaled A4 sheet instead of being
+     clipped by the viewport-bound overflow-x-auto wrapper. */
+  .print-scroll-wrapper {
+    overflow: visible !important;
+    height: auto !important;
+    padding: 0 !important;
+    background: white !important;
+  }
+
+  .print-inner {
+    overflow: visible !important;
+    margin: 0 !important;
+  }
+
+  .invoice-page {
+    box-shadow: none !important;
+    break-after: page;
+    page-break-after: always;
+  }
+
+  .invoice-page:last-child {
+    break-after: auto;
+    page-break-after: auto;
+  }
 }

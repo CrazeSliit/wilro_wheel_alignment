@@ -53,8 +53,8 @@ export default function PrintInvoiceClient({ invoiceData }: { invoiceData: Invoi
         </Link>
       </div>
 
-      <div className="flex-1 overflow-auto bg-muted/20 p-8">
-        <div className="mx-auto overflow-x-auto">
+      <div className="print-scroll-wrapper flex-1 overflow-auto bg-muted/20 p-8">
+        <div className="print-inner mx-auto overflow-x-auto">
           <InvoicePreview data={invoiceData} />
         </div>
       </div>

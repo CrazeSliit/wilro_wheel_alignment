@@ -61,7 +61,7 @@ const fmt = (n: number) =>
 const fmtDate = (d: string) => {
   if (!d) return "";
   const [y, m, day] = d.split("-");
-  return `${day}/${m}/${y}`;
+  return `${m}/${day}/${y}`;
 };
 
 /**
