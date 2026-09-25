@@ -16,14 +16,6 @@ export default function InvoiceRowActions({ invoiceId }: Props) {
   const [error, setError] = useState("");
   const [showConfirm, setShowConfirm] = useState(false);
 
-  const printInvoice = () => {
-    window.open(
-      `/dashboard/employee/tax-invoice/history/${invoiceId}/print`,
-      "_blank",
-      "noopener,noreferrer"
-    );
-  };
-
   const handleDelete = () => {
     setError("");
     setShowConfirm(true);
@@ -58,13 +50,14 @@ export default function InvoiceRowActions({ invoiceId }: Props) {
         >
           Edit
         </Link>
-        <button
-          type="button"
-          onClick={printInvoice}
+        <Link
+          href={`/dashboard/employee/tax-invoice/history/${invoiceId}/print`}
+          target="_blank"
+          rel="noopener noreferrer"
           className="inline-flex items-center rounded-lg bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground hover:opacity-90 transition"
         >
           Print
-        </button>
+        </Link>
         <button
           type="button"
           onClick={handleDelete}

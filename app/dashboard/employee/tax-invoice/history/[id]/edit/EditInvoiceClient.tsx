@@ -54,14 +54,6 @@ export default function EditInvoiceClient({ invoiceId, initialData }: Props) {
     setSaveSuccess(`Updated ${invoiceNo} successfully.`);
   };
 
-  const handlePrint = () => {
-    window.open(
-      `/dashboard/employee/tax-invoice/history/${invoiceId}/print`,
-      "_blank",
-      "noopener,noreferrer"
-    );
-  };
-
   return (
     <>
       <div className="no-print px-8 pt-6 pb-5 border-b border-border flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -108,12 +100,14 @@ export default function EditInvoiceClient({ invoiceId, initialData }: Props) {
             Add New Sheet
           </button>
 
-          <button
-            onClick={handlePrint}
+          <Link
+            href={`/dashboard/employee/tax-invoice/history/${invoiceId}/print`}
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition"
           >
             Print / PDF
-          </button>
+          </Link>
 
           <button
             onClick={handleUpdate}
