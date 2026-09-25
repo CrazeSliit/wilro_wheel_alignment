@@ -7,50 +7,22 @@ import type { InvoiceData } from "@/lib/invoice-types";
 
 export default function PrintInvoiceClient({ invoiceData }: { invoiceData: InvoiceData }) {
   useEffect(() => {
-    const el = document.getElementById("invoice-preview");
-    if (!el) return;
-
-    const html = `<!DOCTYPE html><html><head>
-<meta charset="utf-8">
-<base href="${window.location.origin}/">
-<title></title>
-<style>
-  @page { size: A4 portrait; margin: 0; }
-  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; background: white; width: 210mm; }
-  #invoice-preview { display: flex; flex-direction: column; gap: 0; }
-  .invoice-page { width: 210mm; height: 297mm; overflow: hidden; box-shadow: none; break-after: page; page-break-after: always; }
-  .invoice-page:last-child { break-after: auto; page-break-after: auto; }
-</style>
-</head><body>${el.outerHTML}</body></html>`;
-
-    const blob = new Blob([html], { type: "text/html;charset=utf-8" });
-    const blobUrl = URL.createObjectURL(blob);
-    const printWin = window.open(blobUrl, "_blank");
-    if (!printWin) { URL.revokeObjectURL(blobUrl); return; }
-
+    // Wait for images (logo + watermark) to finish loading before printing —
+    // calling window.print() immediately on mount could fire before they
+    // fetch, printing them blank.
     let printed = false;
     const doPrint = () => {
       if (printed) return;
       printed = true;
-      printWin.focus();
-      printWin.print();
-      printWin.close();
-      URL.revokeObjectURL(blobUrl);
+      window.print();
     };
 
-    // Wait for the popup document (and its images — logo + watermark) to fully
-    // load before printing; a fixed setTimeout was firing before the images
-    // finished fetching, so they printed blank.
-    printWin.addEventListener("load", () => {
-      const imgs = Array.from(printWin.document.images);
-      const pending = imgs.filter((img) => !img.complete);
+    const imgs = Array.from(document.images);
+    const pending = imgs.filter((img) => !img.complete);
 
-      if (pending.length === 0) {
-        doPrint();
-        return;
-      }
-
+    if (pending.length === 0) {
+      doPrint();
+    } else {
       let remaining = pending.length;
       const onSettled = () => {
         remaining -= 1;
@@ -60,10 +32,10 @@ export default function PrintInvoiceClient({ invoiceData }: { invoiceData: Invoi
         img.addEventListener("load", onSettled, { once: true });
         img.addEventListener("error", onSettled, { once: true });
       });
-    });
+    }
 
-    // Safety net in case the load event or an image never settles.
-    setTimeout(doPrint, 3000);
+    const safety = setTimeout(doPrint, 3000);
+    return () => clearTimeout(safety);
   }, []);
 
   return (

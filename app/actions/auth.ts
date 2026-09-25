@@ -33,10 +33,6 @@ function withTimeout<T>(promise: Promise<T>, ms: number, errorMessage: string): 
   });
 }
 
-  function wait(ms: number): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
-
 export async function login(
   _prev: AuthState,
   formData: FormData
@@ -50,14 +46,14 @@ export async function login(
 
   let user;
   try {
-    const timeoutMessage = "The database is taking too long to respond. Please try again.";
-
-    try {
-      user = await withTimeout(prisma.user.findUnique({ where: { email } }), 10000, timeoutMessage);
-    } catch {
-      await wait(250);
-      user = await withTimeout(prisma.user.findUnique({ where: { email } }), 10000, timeoutMessage);
-    }
+    // Neon's serverless compute can take a few seconds to wake from
+    // auto-suspend, so give a single attempt a generous timeout rather than
+    // firing a second overlapping query at an already-slow connection.
+    user = await withTimeout(
+      prisma.user.findUnique({ where: { email } }),
+      20000,
+      "The database is taking too long to respond. Please try again."
+    );
   } catch {
     return { error: "The database is taking too long to respond. Please try again." };
   }
