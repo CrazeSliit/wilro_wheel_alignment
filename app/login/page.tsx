@@ -13,7 +13,7 @@ export default function LoginPage() {
         className="hidden lg:flex lg:w-1/2 relative flex-col justify-between overflow-hidden"
         style={{
           backgroundImage:
-            "url('https://plus.unsplash.com/premium_photo-1661963005592-182d602c6a3f?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
+            "url('https://images.unsplash.com/photo-1645445522156-9ac06bc7a767?q=80&w=1470&auto=format&fit=crop')",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
