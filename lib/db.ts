@@ -1,5 +1,13 @@
+import dns from "node:dns";
+import net from "node:net";
 import { PrismaClient } from "@prisma/client";
 import { PrismaNeonHTTP } from "@prisma/adapter-neon";
+
+// Neon resolves to IPv6 addresses that are unreachable on some networks, and
+// Node's happy-eyeballs attempt timeout (250ms) then fails the request with
+// ETIMEDOUT. Prefer IPv4 and connect without auto-select so queries succeed.
+dns.setDefaultResultOrder("ipv4first");
+net.setDefaultAutoSelectFamily(false);
 
 function createPrismaClient() {
   const adapter = new PrismaNeonHTTP(process.env.DATABASE_URL!, {});

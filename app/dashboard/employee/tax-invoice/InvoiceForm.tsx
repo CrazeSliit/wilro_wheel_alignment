@@ -278,8 +278,7 @@ export default function InvoiceForm({ data, onChange }: Props) {
   const mainPageMaxLines = 16;
   const fillerCount = Math.max(0, mainPageMaxLines - usedLines);
   const totalExVAT  = computeExVAT(data);
-  const vatAmount   = totalExVAT * 0.18;
-  const totalIncVAT = totalExVAT + vatAmount;
+  const totalIncVAT = totalExVAT;
 
   return (
     <>
@@ -485,12 +484,8 @@ export default function InvoiceForm({ data, onChange }: Props) {
                       <td colSpan={4} style={cell({ color: labelColor, height: "28px" })}>Total Value of Supply:</td>
                       <td style={cell({ textAlign: "right", fontWeight: "600", height: "28px" })}>{fmt(totalExVAT)}</td>
                     </tr>
-                    <tr>
-                      <td colSpan={4} style={cell({ color: labelColor, height: "28px" })}>VAT Amount (Total Value of Supply @ 18%)</td>
-                      <td style={cell({ textAlign: "right", fontWeight: "600", height: "28px" })}>{fmt(vatAmount)}</td>
-                    </tr>
                     <tr style={{ background: "#e8eef8" }}>
-                      <td colSpan={4} style={cell({ fontWeight: "600", height: "28px" })}>Total Amount including VAT:</td>
+                      <td colSpan={4} style={cell({ fontWeight: "600", height: "28px" })}>Total Amount:</td>
                       <td style={cell({ textAlign: "right", fontWeight: "700", fontSize: "12px", height: "28px" })}>{fmt(totalIncVAT)}</td>
                     </tr>
                   </>
@@ -685,8 +680,7 @@ function ExtraSheetForm({
 
   const isLastSheet = sheet.id === data.extraSheets[data.extraSheets.length - 1]?.id;
   const combinedExVAT = computeExVAT(data);
-  const combinedVAT   = combinedExVAT * 0.18;
-  const combinedGrand = combinedExVAT + combinedVAT;
+  const combinedGrand = combinedExVAT;
 
   return (
     <>
@@ -845,8 +839,7 @@ function ExtraSheetForm({
               {isLastSheet && (
                 <>
                   <tr><td colSpan={4} style={cell({ color: labelColor, height: "28px" })}>Total Value of Supply:</td><td style={cell({ textAlign: "right", fontWeight: "600", height: "28px" })}>{fmt(combinedExVAT)}</td></tr>
-                  <tr><td colSpan={4} style={cell({ color: labelColor, height: "28px" })}>VAT Amount (Total Value of Supply @ 18%)</td><td style={cell({ textAlign: "right", fontWeight: "600", height: "28px" })}>{fmt(combinedVAT)}</td></tr>
-                  <tr style={{ background: "#e8eef8" }}><td colSpan={4} style={cell({ fontWeight: "600", height: "28px" })}>Total Amount including VAT:</td><td style={cell({ textAlign: "right", fontWeight: "700", fontSize: "12px", height: "28px" })}>{fmt(combinedGrand)}</td></tr>
+                  <tr style={{ background: "#e8eef8" }}><td colSpan={4} style={cell({ fontWeight: "600", height: "28px" })}>Total Amount:</td><td style={cell({ textAlign: "right", fontWeight: "700", fontSize: "12px", height: "28px" })}>{fmt(combinedGrand)}</td></tr>
                 </>
               )}
             </tbody>

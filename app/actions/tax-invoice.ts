@@ -59,7 +59,7 @@ async function canManageInvoice(invoiceId: string, userId: string, role: string)
 }
 
 function calculateTotalAmount(invoiceData: InvoiceData): number {
-  return computeExVAT(invoiceData) * 1.18;
+  return computeExVAT(invoiceData);
 }
 
 export async function saveTaxInvoice(
