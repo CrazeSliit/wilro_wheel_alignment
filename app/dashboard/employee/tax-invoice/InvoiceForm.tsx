@@ -1,8 +1,19 @@
 "use client";
 
 import { useRef, useLayoutEffect, useState } from "react";
-import { InvoiceData, LineItem, ExtraSheet, numberToWords, computeExVAT } from "@/lib/invoice-types";
+import { InvoiceData, LineItem, ExtraSheet, numberToWords, computeExVAT, lineAmount } from "@/lib/invoice-types";
 import { v4 as uuidv4 } from "uuid";
+
+/** Max decimal places allowed in the Quantity field (e.g. 2.5, 1.25, 0.375). */
+const QTY_DECIMALS = 3;
+
+/** Keep digits and a single ".", strip leading zeros, cap decimal places. "1." is kept while typing. */
+const sanitizeDecimal = (raw: string, maxDecimals: number) => {
+  const parts = raw.replace(/[^\d.]/g, "").split(".");
+  const intPart = (parts[0] ?? "").replace(/^0+(?=\d)/, "");
+  const decPart = parts.length > 1 ? parts.slice(1).join("").slice(0, maxDecimals) : undefined;
+  return decPart !== undefined ? `${intPart || "0"}.${decPart}` : intPart;
+};
 
 /** Textarea that auto-expands vertically to fit its content — no scroll bar. */
 function AutoTextarea({
@@ -155,6 +166,7 @@ function FullLetterhead() {
 
 
 export default function InvoiceForm({ data, onChange }: Props) {
+  const [rawQtys, setRawQtys] = useState<Record<string, string>>({});
   const [rawPrices, setRawPrices] = useState<Record<string, string>>({});
   const [rawAmounts, setRawAmounts] = useState<Record<string, string>>({});
   const [rawCommonPrice, setRawCommonPrice] = useState<string | null>(null);
@@ -215,14 +227,19 @@ export default function InvoiceForm({ data, onChange }: Props) {
   const normalizeLeadingZeros = (raw: string) => raw.replace(/^0+(?=\d)/, "");
 
   const handleQuantityChange = (id: string, raw: string) => {
-    const d = raw.replace(/\D/g, "");
-    const qty = parseInt(normalizeLeadingZeros(d) || "0", 10) || 0;
+    const norm = sanitizeDecimal(raw, QTY_DECIMALS);
+    setRawQtys((prev) => ({ ...prev, [id]: norm }));
+    const qty = parseFloat(norm || "0") || 0;
     onChange({
       ...data,
       lineItems: data.lineItems.map((item) =>
         item.id === id ? { ...item, quantity: qty, amount: undefined } : item
       ),
     });
+  };
+
+  const commitRawQty = (id: string) => {
+    setRawQtys((prev) => { const n = { ...prev }; delete n[id]; return n; });
   };
 
   const handleUnitPriceChange = (id: string, raw: string) => {
@@ -432,7 +449,7 @@ export default function InvoiceForm({ data, onChange }: Props) {
                     </td>
                     <td style={cell({ textAlign: "center", padding: "0 8px", height: "28px", verticalAlign: "top", position: data.commonPricing ? "relative" : undefined })}>
                       <div style={{ height: "28px", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                        <input type="text" inputMode="numeric" value={item.quantity === 0 ? "" : String(item.quantity)} onChange={(e) => handleQuantityChange(item.id, e.target.value)} placeholder="1" style={{ ...inpStyle, textAlign: "center" }} />
+                        <input type="text" inputMode="decimal" value={rawQtys[item.id] ?? (item.quantity === 0 ? "" : String(item.quantity))} onChange={(e) => handleQuantityChange(item.id, e.target.value)} onBlur={() => commitRawQty(item.id)} placeholder="1" style={{ ...inpStyle, textAlign: "center" }} />
                       </div>
                       {data.commonPricing && (
                         <button onClick={() => removeItem(item.id)} disabled={data.lineItems.length === 1} style={{ ...floatingDeleteButtonStyle, opacity: data.lineItems.length === 1 ? 0.3 : 1, cursor: data.lineItems.length === 1 ? "not-allowed" : "pointer" }} title="Remove row">✕</button>
@@ -447,7 +464,7 @@ export default function InvoiceForm({ data, onChange }: Props) {
                         </td>
                         <td style={cell({ textAlign: "right", padding: "0 30px 0 8px", height: "28px", verticalAlign: "top", position: "relative" })}>
                           <div style={{ height: "28px", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
-                            <input type="text" inputMode="decimal" value={rawAmounts[item.id] ?? (item.amount !== undefined ? fmt(item.amount) : (item.quantity * item.unitPrice === 0 ? "" : fmt(item.quantity * item.unitPrice)))} onChange={(e) => handleAmountChange(item.id, e.target.value)} onBlur={() => commitRawAmount(item.id)} placeholder="0.00" style={{ ...inpStyle, textAlign: "right" }} />
+                            <input type="text" inputMode="decimal" value={rawAmounts[item.id] ?? (lineAmount(item) === 0 ? "" : fmt(lineAmount(item)))} onChange={(e) => handleAmountChange(item.id, e.target.value)} onBlur={() => commitRawAmount(item.id)} placeholder="0.00" style={{ ...inpStyle, textAlign: "right" }} />
                           </div>
                           <button onClick={() => removeItem(item.id)} disabled={data.lineItems.length === 1} style={{ ...floatingDeleteButtonStyle, opacity: data.lineItems.length === 1 ? 0.3 : 1, cursor: data.lineItems.length === 1 ? "not-allowed" : "pointer" }} title="Remove row">✕</button>
                         </td>
@@ -578,6 +595,7 @@ function ExtraSheetForm({
   data: InvoiceData;
   onChange: (d: InvoiceData) => void;
 }) {
+  const [rawQtys, setRawQtys] = useState<Record<string, string>>({});
   const [rawPrices, setRawPrices] = useState<Record<string, string>>({});
   const [rawAmounts, setRawAmounts] = useState<Record<string, string>>({});
 
@@ -621,14 +639,19 @@ function ExtraSheetForm({
   const normalizeLeadingZeros = (raw: string) => raw.replace(/^0+(?=\d)/, "");
 
   const handleQty = (id: string, raw: string) => {
-    const d = raw.replace(/\D/g, "");
-    const qty = parseInt(normalizeLeadingZeros(d) || "0", 10) || 0;
+    const norm = sanitizeDecimal(raw, QTY_DECIMALS);
+    setRawQtys((prev) => ({ ...prev, [id]: norm }));
+    const qty = parseFloat(norm || "0") || 0;
     updateSheet({
       ...sheet,
       lineItems: sheet.lineItems.map((item) =>
         item.id === id ? { ...item, quantity: qty, amount: undefined } : item
       ),
     });
+  };
+
+  const commitRawQty = (id: string) => {
+    setRawQtys((prev) => { const n = { ...prev }; delete n[id]; return n; });
   };
 
   const handlePrice = (id: string, raw: string) => {
@@ -810,7 +833,7 @@ function ExtraSheetForm({
                   <td style={cell({ padding: "0 8px", height: "28px", verticalAlign: "top" })}><div style={{ height: "28px", overflow: "hidden", display: "flex", alignItems: "center" }}><input type="text" value={item.reference} onChange={(e) => updateItem(item.id, "reference", e.target.value)} placeholder="Ref" style={inpStyle} /></div></td>
                   <td style={cell({ padding: "4px 8px", verticalAlign: "top" })}><AutoTextarea value={item.description} onChange={(v) => updateItem(item.id, "description", v)} placeholder="Description" /></td>
                   <td style={cell({ textAlign: "center", padding: "0 8px", height: "28px", verticalAlign: "top", position: data.commonPricing ? "relative" : undefined })}>
-                    <div style={{ height: "28px", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}><input type="text" inputMode="numeric" value={item.quantity === 0 ? "" : String(item.quantity)} onChange={(e) => handleQty(item.id, e.target.value)} placeholder="1" style={{ ...inpStyle, textAlign: "center" }} /></div>
+                    <div style={{ height: "28px", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}><input type="text" inputMode="decimal" value={rawQtys[item.id] ?? (item.quantity === 0 ? "" : String(item.quantity))} onChange={(e) => handleQty(item.id, e.target.value)} onBlur={() => commitRawQty(item.id)} placeholder="1" style={{ ...inpStyle, textAlign: "center" }} /></div>
                     {data.commonPricing && (
                       <button onClick={() => removeItem(item.id)} disabled={sheet.lineItems.length === 1} style={{ ...floatingDeleteButtonStyle, opacity: sheet.lineItems.length === 1 ? 0.3 : 1, cursor: sheet.lineItems.length === 1 ? "not-allowed" : "pointer" }} title="Remove row">✕</button>
                     )}
@@ -818,7 +841,7 @@ function ExtraSheetForm({
                   {!data.commonPricing && (
                     <>
                       <td style={cell({ textAlign: "right", padding: "0 8px", height: "28px", verticalAlign: "top" })}><div style={{ height: "28px", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "flex-end" }}><input type="text" inputMode="decimal" value={rawPrices[item.id] ?? (item.unitPrice === 0 ? "" : String(item.unitPrice))} onChange={(e) => handlePrice(item.id, e.target.value)} onBlur={() => commitRawPrice(item.id)} placeholder="0.00" style={{ ...inpStyle, textAlign: "right" }} /></div></td>
-                      <td style={cell({ textAlign: "right", padding: "0 30px 0 8px", height: "28px", verticalAlign: "top", position: "relative" })}><div style={{ height: "28px", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "flex-end" }}><input type="text" inputMode="decimal" value={rawAmounts[item.id] ?? (item.amount !== undefined ? fmt(item.amount) : (item.quantity * item.unitPrice === 0 ? "" : fmt(item.quantity * item.unitPrice)))} onChange={(e) => handleAmountChange(item.id, e.target.value)} onBlur={() => commitRawAmount(item.id)} placeholder="0.00" style={{ ...inpStyle, textAlign: "right" }} /></div><button onClick={() => removeItem(item.id)} disabled={sheet.lineItems.length === 1} style={{ ...floatingDeleteButtonStyle, opacity: sheet.lineItems.length === 1 ? 0.3 : 1, cursor: sheet.lineItems.length === 1 ? "not-allowed" : "pointer" }} title="Remove row">✕</button></td>
+                      <td style={cell({ textAlign: "right", padding: "0 30px 0 8px", height: "28px", verticalAlign: "top", position: "relative" })}><div style={{ height: "28px", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "flex-end" }}><input type="text" inputMode="decimal" value={rawAmounts[item.id] ?? (lineAmount(item) === 0 ? "" : fmt(lineAmount(item)))} onChange={(e) => handleAmountChange(item.id, e.target.value)} onBlur={() => commitRawAmount(item.id)} placeholder="0.00" style={{ ...inpStyle, textAlign: "right" }} /></div><button onClick={() => removeItem(item.id)} disabled={sheet.lineItems.length === 1} style={{ ...floatingDeleteButtonStyle, opacity: sheet.lineItems.length === 1 ? 0.3 : 1, cursor: sheet.lineItems.length === 1 ? "not-allowed" : "pointer" }} title="Remove row">✕</button></td>
                     </>
                   )}
                   {data.commonPricing && idx === 0 && (

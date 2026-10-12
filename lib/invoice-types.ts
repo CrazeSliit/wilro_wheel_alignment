@@ -60,6 +60,15 @@ export const defaultInvoiceData: InvoiceData = {
 };
 
 /**
+ * Amount for a single line item. Quantity may be a decimal (e.g. 2.5),
+ * so the computed product is rounded to cents.
+ */
+export function lineAmount(i: Pick<LineItem, "quantity" | "unitPrice" | "amount">): number {
+  if (i.amount !== undefined) return i.amount;
+  return Math.round(i.quantity * i.unitPrice * 100) / 100;
+}
+
+/**
  * Total "Excl. VAT" value for an invoice (main page + all extra sheets combined).
  * When commonPricing is on, a single flat amount replaces the per-item sums.
  */
@@ -67,16 +76,12 @@ export function computeExVAT(
   data: Pick<InvoiceData, "lineItems" | "extraSheets" | "commonPricing" | "commonAmount">
 ): number {
   if (data.commonPricing) return data.commonAmount ?? 0;
-  const mainEx = data.lineItems.reduce(
-    (s, i) => s + (i.amount !== undefined ? i.amount : i.quantity * i.unitPrice),
-    0
-  );
+  const mainEx = data.lineItems.reduce((s, i) => s + lineAmount(i), 0);
   const extraEx = (data.extraSheets ?? []).reduce(
-    (s, sheet) =>
-      s + sheet.lineItems.reduce((ss, i) => ss + (i.amount !== undefined ? i.amount : i.quantity * i.unitPrice), 0),
+    (s, sheet) => s + sheet.lineItems.reduce((ss, i) => ss + lineAmount(i), 0),
     0
   );
-  return mainEx + extraEx;
+  return Math.round((mainEx + extraEx) * 100) / 100;
 }
 
 export function numberToWords(n: number): string {

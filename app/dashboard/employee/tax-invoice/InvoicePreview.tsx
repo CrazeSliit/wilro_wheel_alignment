@@ -1,6 +1,6 @@
 "use client";
 
-import { InvoiceData, ExtraSheet, numberToWords, computeExVAT } from "@/lib/invoice-types";
+import { InvoiceData, ExtraSheet, numberToWords, computeExVAT, lineAmount } from "@/lib/invoice-types";
 import { useEffect, useRef, useState } from "react";
 
 interface Props {
@@ -319,7 +319,7 @@ function ItemsTable({
             {!commonPricing && (
               <>
                 <td style={cell({ textAlign: "right",  height: "28px" })}>{fmt(item.unitPrice)}</td>
-                <td style={cell({ textAlign: "right",  height: "28px" })}>{fmt(item.amount !== undefined ? item.amount : item.quantity * item.unitPrice)}</td>
+                <td style={cell({ textAlign: "right",  height: "28px" })}>{fmt(lineAmount(item))}</td>
               </>
             )}
             {commonPricing && commonPricing.showMerged && idx === 0 && (
